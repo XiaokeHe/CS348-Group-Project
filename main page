@@ -1,0 +1,30 @@
+import java.awt.*;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class main {
+    public static void main(String[] args) {
+        JFrame testFrame = new JFrame();
+        testFrame.setSize(600, 600);
+        testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JPanel panel = new JPanel();
+        testFrame.setContentPane(panel);
+        GridLayout layout = new GridLayout(3, 2);
+        testFrame.setLayout(layout);
+        JButton button1 = new JButton("Manege Books");
+        JButton button2 = new JButton("Manage customers");
+        JButton button3 = new JButton("Borrow Books");
+        JButton button4 = new JButton("Return Books");
+        JButton button5 = new JButton("Find Books");
+        JButton button6 = new JButton("Show Record");
+        panel.add(button1, BorderLayout.NORTH);
+        panel.add(button2);
+        panel.add(button3);
+        panel.add(button4);
+        panel.add(button5);
+        panel.add(button6);
+        testFrame.setVisible(true);
+    }
+}
