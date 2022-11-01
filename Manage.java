@@ -61,7 +61,7 @@ class Manage extends JFrame {
         }
     };
 
-    public Client(String title) {
+    public Manage(String title) {
         super(title);
         setLayout(new BorderLayout());
         this.setSize(1000, 200);
