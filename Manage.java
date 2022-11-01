@@ -22,32 +22,55 @@ class Manage extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == add) {
+                action = "add";
                 if (!isbnField.getText().equals("")) {
                     isbn = new BigInteger(isbnField.getText());
                     isbnCheck = new BigInteger("1000000000000");
                     if (isbn.compareTo(isbnCheck) < 0) {
                         JOptionPane.showMessageDialog(null, "ISBN has to be 13 digits number",
                                 "Book Info Error", JOptionPane.ERROR_MESSAGE);
+                        action = "no";
                     }
                     isbnCheck = new BigInteger("9999999999999");
                     if (isbn.compareTo(isbnCheck) > 0) {
                         JOptionPane.showMessageDialog(null, "ISBN has to be 13 digits number",
                                 "Book Info Error", JOptionPane.ERROR_MESSAGE);
+                        action = "no";
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "ISBN has to be 13 digits number",
                             "Book Info Error", JOptionPane.ERROR_MESSAGE);
+                    action = "no";
                 }
-
-                titles = titleField.getText();
-                author = authorField.getText();
-                genre = genreField.getText();
-                isbnField.setText("");
-                titleField.setText("");
-                authorField.setText("");
-                genreField.setText("");
-                action = "add";
+                if (!titleField.getText().equals("") && !authorField.getText().equals("") && !genreField.getText().equals("")) {
+                    titles = titleField.getText();
+                    author = authorField.getText();
+                    genre = genreField.getText();
+                    isbnField.setText("");
+                    titleField.setText("");
+                    authorField.setText("");
+                    genreField.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please enter all information",
+                            "Book Info Error", JOptionPane.ERROR_MESSAGE);
+                    action = "no";
+                }
                 System.out.println(isbn);
+                try {
+                    Connection connection = DriverManager. getConnection("jdbc:mysql://localhost:3306/jdbc-video","root","toor");
+                    Statement statement = connection.createStatement ();
+                    ResultSet resultSet = statement.executeQuery ( "select book_id from Book order by book_id desc limit 1");
+                    resultSet.next ();
+                    String prevId = resultSet.getString("book_id");
+                    prevId = prevId.substring(1);
+                    int prevNumber = Integer.parseInt(prevId);
+                    int IdNumber = prevNumber + 1;
+                    String bookId = "B" + IdNumber;
+
+
+                } catch (Exception e1) {
+                    e1.printStackTrace () ;
+                }
             }
             if (e.getSource() == delete) {
                 action = "delete";
