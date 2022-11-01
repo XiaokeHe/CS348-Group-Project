@@ -1,21 +1,81 @@
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.math.BigInteger;
+import java.util.Objects;
 
-class Client extends JFrame{
-    public Client(String title)
-    {
+class Client extends JFrame {
+    static BigInteger isbn;
+    static BigInteger isbnCheck;
+    static String titles;
+    static String author;
+    static String genre;
+    static JTextArea isbnField;
+    static JTextArea authorField;
+    static JTextArea titleField;
+    static JTextArea genreField;
+    static JButton add;
+    static JButton delete;
+    private static String action;
+
+    ActionListener actionListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == add) {
+                if (!isbnField.getText().equals("")) {
+                    isbn = new BigInteger(isbnField.getText());
+                    isbnCheck = new BigInteger("1000000000000");
+                    if (isbn.compareTo(isbnCheck) < 0) {
+                        JOptionPane.showMessageDialog(null, "ISBN has to be 13 digits number",
+                                "Book Info Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    isbnCheck = new BigInteger("9999999999999");
+                    if (isbn.compareTo(isbnCheck) > 0) {
+                        JOptionPane.showMessageDialog(null, "ISBN has to be 13 digits number",
+                                "Book Info Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "ISBN has to be 13 digits number",
+                            "Book Info Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+                titles = titleField.getText();
+                author = authorField.getText();
+                genre = genreField.getText();
+                isbnField.setText("");
+                titleField.setText("");
+                authorField.setText("");
+                genreField.setText("");
+                action = "add";
+                System.out.println(isbn);
+            }
+            if (e.getSource() == delete) {
+                action = "delete";
+            }
+        }
+    };
+    WindowListener windowListener = new WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent evt) {
+            action = "closed";
+        }
+    };
+
+    public Client(String title) {
         super(title);
         setLayout(new BorderLayout());
-        this.setSize(1000,200);
+        this.setSize(1000, 200);
         Toolkit computer1 = Toolkit.getDefaultToolkit();
         Dimension dim = computer1.getScreenSize();
-        int x = (dim.width/2) - (this.getWidth()/2);
-        int y = (dim.height/2) - (this.getHeight()/2);
+        int x = (dim.width / 2) - (this.getWidth() / 2);
+        int y = (dim.height / 2) - (this.getHeight() / 2);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocation(x, y);
         this.setLocationRelativeTo(null);
-        JButton add = new ButtonColor("Add Book",new Dimension(120,50));
-        JButton delete = new ButtonColor("Delete Book",new Dimension(120,50));
+        add = new ButtonColor("Add Book", new Dimension(120, 50));
+        add.addActionListener(actionListener);
+        delete = new ButtonColor("Delete Book", new Dimension(120, 50));
+        delete.addActionListener(actionListener);
 
         JPanel parent = new JPanel();
         Box ip_box = Box.createHorizontalBox();
@@ -28,57 +88,43 @@ class Client extends JFrame{
 
         JPanel receive_box = new JPanel();
         JPanel adjust = new JPanel();
-        JLabel ip_name = new JLabel("Enter the ISBN:");
-        JTextArea ip = new JTextArea();
-        ip.setColumns(10);
-        ip.setRows(1);
+        JLabel isbnLabel = new JLabel("Enter the ISBN:");
+        isbnField = new JTextArea();
+        isbnField.setColumns(10);
+        isbnField.setRows(1);
+        ip_box.add(isbnLabel);
+        ip_box.add(isbnField);
 
-        JLabel file_name = new JLabel("Enter the title:");
-        JTextArea filename = new JTextArea();
-        filename.setColumns(10);
-        filename.setRows(1);
-        ip_box.add(ip_name);
-        ip_box.add(ip);
+        JLabel titleLabel = new JLabel("Enter the title:");
+        titleField = new JTextArea();
+        titleField.setColumns(10);
+        titleField.setRows(1);
+        file_box.add(titleLabel);
+        file_box.add(titleField);
 
-        JLabel author = new JLabel("Enter the author name:");
-        JTextArea port = new JTextArea();
+        JLabel authorLabel = new JLabel("Enter the author name:");
+        authorField = new JTextArea();
+        authorField.setColumns(10);
+        authorField.setRows(1);
+        port_box.add(authorLabel);
+        port_box.add(authorField);
 
-        JLabel genre = new JLabel("Enter the genre:");
-        JTextArea ge = new JTextArea();
-        ge.setColumns(10);
-        ge.setRows(1);
-        Genre.add(genre);
-        Genre.add(ge);
-
-        JLabel status = new JLabel("Enter the status:");
-        JTextArea st = new JTextArea();
-        st.setColumns(10);
-        st.setRows(1);
-        Status.add(status);
-        Status.add(st);
-
-        JLabel bk_id = new JLabel("Enter the book id:");
-        JTextArea bk = new JTextArea();
-        bk.setColumns(10);
-        bk.setRows(1);
-        Book_id.add(bk_id);
-        Book_id.add(bk);
+        JLabel genreLabel = new JLabel("Enter the genre:");
+        genreField = new JTextArea();
+        genreField.setColumns(10);
+        genreField.setRows(1);
+        Genre.add(genreLabel);
+        Genre.add(genreField);
 
         JTextArea received_view = new JTextArea();
-        received_view.setSize(200,300);
+        received_view.setSize(200, 300);
         received_view.setEditable(false);
-        JScrollPane scroll_button = new JScrollPane(received_view,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        port.setColumns(10);
-        port.setRows(1);
-        port_box.add(author);
-        port_box.add(port);
+        JScrollPane scroll_button = new JScrollPane(received_view, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         receive_box.add(add);
         receive_box.add(delete);
-        adjust.setLayout(new FlowLayout(FlowLayout.LEFT,70,20));
+        adjust.setLayout(new FlowLayout(FlowLayout.LEFT, 70, 20));
         adjust.add(received_view);
         adjust.add(scroll_button);
-        file_box.add(file_name);
-        file_box.add(filename);
 
         parent.add(ip_box);
         parent.add(port_box);
@@ -91,11 +137,27 @@ class Client extends JFrame{
         parent.add(adjust);
         this.add(parent);
 
-        ImageIcon logo = new ImageIcon(getClass().getClassLoader().getResource("icon.jpg"));
+        ImageIcon logo = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("icon.jpg")));
         this.setIconImage(logo.getImage());
+    }
 
+    public static String getAction() {
+        return action;
+    }
 
+    public static BigInteger getIsbn() {
+        return isbn;
+    }
 
+    public static String getTitles() {
+        return titles;
+    }
 
+    public static String getAuthor() {
+        return author;
+    }
+
+    public static String getGenre() {
+        return genre;
     }
 }

@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class Frame extends JFrame{
@@ -63,6 +63,7 @@ public class Frame extends JFrame{
                         Frame.this.flag=-1;
                     }
                 });
+
             }
         });
 
