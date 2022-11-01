@@ -1,7 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 
-class Server extends JFrame {
+class Search extends JFrame {
     public Server(String title) {
         super(title);
         setLayout(new BorderLayout());
