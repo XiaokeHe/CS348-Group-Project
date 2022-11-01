@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.math.BigInteger;
 import java.util.Objects;
 
-class Client extends JFrame {
+class Manage extends JFrame {
     static BigInteger isbn;
     static BigInteger isbnCheck;
     static String titles;
