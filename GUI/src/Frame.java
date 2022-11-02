@@ -2,12 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
+import java.sql.*;
 
 
 public class Frame extends JFrame{
     int flag = -1;
-    public Frame(String title)
-    {
+    public Frame(String title, String jdbc, String username, String password) throws Exception {
         super(title);
         setLayout(new BorderLayout());
         this.setSize(400,200);
@@ -39,9 +39,12 @@ public class Frame extends JFrame{
         ImageIcon logo = new ImageIcon(getClass().getClassLoader().getResource("icon.jpg"));
         this.setIconImage(logo.getImage());
 
+        Connection connection = DriverManager.getConnection(jdbc, username, password);
+        Statement statement = connection.createStatement();
+
         search.addActionListener(e -> {
             if(Frame.this.flag==-1){
-                Search fs = new Search("Search");
+                Search fs = new Search("Search Information");
                 fs.setVisible(true);
                 fs.setSize(430,430);
                 Frame.this.flag=1;
@@ -54,7 +57,7 @@ public class Frame extends JFrame{
         });
         manage.addActionListener(e -> {
             if(Frame.this.flag==-1){
-                Manage fs = new Manage("Library Management");
+                Manage fs = new Manage("Information Management", statement);
                 fs.setVisible(true);
                 fs.setSize(300,300);
                 Frame.this.flag=1;
@@ -65,9 +68,5 @@ public class Frame extends JFrame{
                 });
             }
         });
-
-
     }
-
-
 }
