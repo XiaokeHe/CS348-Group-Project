@@ -44,4 +44,3 @@ public class ButtonColor extends JButton {
         super.paintComponent(g);
     }
 }
-
