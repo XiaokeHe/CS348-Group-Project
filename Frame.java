@@ -111,7 +111,7 @@ public class Frame extends JFrame{
 
         returnBook.addActionListener(e -> {
             if(Frame.this.flag==-1){
-                Loan fs = new Loan("Return Book");
+                Return_book fs = new Return_book(statement);
                 fs.setVisible(true);
                 Frame.this.flag=1;
                 fs.addWindowListener(new WindowAdapter(){

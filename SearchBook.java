@@ -5,11 +5,12 @@ import java.sql.*;
 import java.util.ArrayList;
 
 class SearchBook extends JFrame {
-    static Container content;
+    static Box content;
     static JTextField searchInfo;
     static JButton searchButton;
     static JComboBox<String> dropdown;
-    private static String info;
+    static JPanel panel4;
+        private static String info;
     private static String action;
     private static String filter;
     Statement statement;
@@ -112,7 +113,12 @@ class SearchBook extends JFrame {
                             throw new RuntimeException(ex);
                         }
                     }
-                    JPanel panel1 = new JPanel();
+                    JPanel panel1 = new JPanel() {
+                        @Override
+                        public Dimension getMaximumSize() {
+                            return getPreferredSize();
+                        }
+                    };
 
                     //Get books
                     ArrayList<String[]> books = new ArrayList<>();
@@ -133,7 +139,12 @@ class SearchBook extends JFrame {
                     for(int i = 0; i < books.size(); i++) {
                         data[i] = books.get(i);
                     }
-                    JTable table = new JTable(data, attributes);
+                    JTable table = new JTable(data, attributes) {
+                        @Override
+                        public Dimension getMaximumSize() {
+                            return new Dimension(300, 300);
+                        }
+                    };
                     table.setVisible(true);
                     table.getColumnModel().getColumn(1).setPreferredWidth(110);
                     table.getColumnModel().getColumn(2).setPreferredWidth(140);
@@ -145,19 +156,27 @@ class SearchBook extends JFrame {
                     String s = "Search by: " + filter + " : " + info + " (" + data.length + " book(s) are found)";
                     JLabel summary = new JLabel(s);
                     panel1.add(summary);
-                    JPanel panel2 = new JPanel();
-                    panel2.add(table.getTableHeader(), BorderLayout.NORTH);
-                    panel2.add(table);
-                    JPanel panel3 = new JPanel(new FlowLayout(FlowLayout.LEFT)) {
+                    JPanel panel2 = new JPanel() {
                         @Override
                         public Dimension getMaximumSize() {
                             return getPreferredSize();
                         }
                     };
-                    panel3.setLayout(new BoxLayout(panel3, BoxLayout.PAGE_AXIS));
-                    panel3.add(panel1);
-                    panel3.add(panel2);
-                    content.add(panel3);
+                    panel2.add(table.getTableHeader(), BorderLayout.NORTH);
+                    panel2.add(table);
+                    if (panel4 != null) {
+                        content.remove(panel4);
+                    }
+                    panel4 = new JPanel(new FlowLayout(FlowLayout.LEFT)) {
+                        @Override
+                        public Dimension getMaximumSize() {
+                            return getPreferredSize();
+                        }
+                    };
+                    panel4.setLayout(new BoxLayout(panel4, BoxLayout.PAGE_AXIS));
+                    panel4.add(panel1);
+                    panel4.add(panel2);
+                    content.add(panel4);
                     setVisible(true);
                 }
             }
@@ -187,8 +206,7 @@ class SearchBook extends JFrame {
     public SearchBook(Statement statement) {
         super("Search Book");
         this.statement = statement;
-        content = this.getContentPane();
-        content.setLayout(new GridLayout(0, 1));
+        content = Box.createVerticalBox();
         this.setSize(1000, 500);
         this.setMinimumSize(new Dimension(1000, 500));
         this.setMaximumSize(new Dimension(1000, 2000));
@@ -225,5 +243,6 @@ class SearchBook extends JFrame {
         panel3.add(panel1);
         panel3.add(panel2);
         content.add(panel3);
+        this.add(content);
     }
 }

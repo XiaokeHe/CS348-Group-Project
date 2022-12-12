@@ -17,6 +17,7 @@ class Return_book extends JFrame{
 
     static JTextArea bookIdField;
     Statement statement;
+
     ActionListener actionListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -48,9 +49,9 @@ class Return_book extends JFrame{
             action = "closed";
         }
     };
-    public Return_book(String title)
-    {
-        super(title);
+    public Return_book(Statement statement) {
+        super("Return Book");
+        this.statement = statement;
         setLayout(new BorderLayout());
         this.setSize(1000,200);
         Toolkit computer1 = Toolkit.getDefaultToolkit();
