@@ -37,8 +37,19 @@ class Borrow extends JFrame {
                 }
                 if (action != "no") {
                     try {
-                        String sql = "INSERT INTO Loan_Record VALUES('"+ book_id + "', '"+ cus_id + "')";
-                        int x = statement.executeUpdate(sql);
+                        String sql = "select record_id from Loan_Record order by record_id desc limit 1";
+                        ResultSet resultSet = statement.executeQuery(sql);
+                        resultSet.next();
+                        String prevId = resultSet.getString("record_id");
+                        prevId = prevId.substring(1);
+                        int prevNumber = Integer.parseInt(prevId);
+                        int IdNumber = prevNumber + 1;
+                        String recordId = "R" + String.format("%08d", IdNumber);
+                        String sql2 = "INSERT INTO Loan_Record VALUES('" + recordId + "', '" + book_id + "', '"
+                                + cus_id + "', curdate(), null)";
+                        int x = statement.executeUpdate(sql2);
+                        String sql3 = "UPDATE Book set status = 'unavailable' where book_id ='"+ book_id+"'";
+                        int y = statement.executeUpdate(sql3);
                         JOptionPane.showMessageDialog(null, "Borrow Success!", "Borrow Info", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception e1) {
                         e1.printStackTrace();
