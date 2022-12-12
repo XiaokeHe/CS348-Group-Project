@@ -38,6 +38,7 @@ class Return_book extends JFrame{
                         String record_id = resultSet.getString("record_id");
                         String sql2 = "UPDATE Loan_Record SET return_date = curdate() WHERE record_id = '"+record_id+"' ";
                         int x = statement.executeUpdate(sql2);
+                        JOptionPane.showMessageDialog(null, "Update Success!", "Update Info", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
