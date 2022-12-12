@@ -12,7 +12,7 @@ class Loanpage extends JFrame {
     private static String action;
     private static String filter;
 
-    public Loanpage(Statement statement) {
+    public Loanpage() {
         super("Search Loan Record");
         this.statement = statement;
         content = this.getContentPane();
@@ -26,24 +26,41 @@ class Loanpage extends JFrame {
         //Dropdown Menu
         JLabel select = new JLabel("Search by:");
         select.setVisible(true);
-        String[] choices = {"Book ID", "ISBN", "Customer ID"};
+        String[] choices = {"Book ID", "ISBN", "Customer ID", "Title", "Author", "Genre"};
         dropdown = new JComboBox<String>(choices);
         dropdown.setVisible(true);
-        
-
-
-        String[] time_choices = {"Past 30 days", "Past 10 days"};
-        dropdown = new JComboBox<String>(time_choices);
-        dropdown.setVisible(true);
-        
-        String[] status_choices = {"Return", "Borrow"};
-        dropdown = new JComboBox<String>(status_choices);
-        dropdown.setVisible(true);
-
         JPanel panel1 = new JPanel();
         panel1.add(select);
         panel1.add(dropdown);
-        
+
+        JLabel from = new JLabel("From:");
+        from.setVisible(true);
+        JTextArea from_date = new JTextArea();
+        from_date.setColumns(10);
+        from_date.setRows(1);
+        JPanel panel5 = new JPanel();
+        panel5.add(from);
+        panel5.add(from_date);
+
+        JLabel to = new JLabel("To:");
+        to.setVisible(true);
+        JPanel panel6 = new JPanel();
+        JTextArea to_date = new JTextArea();
+        to_date.setColumns(10);
+        to_date.setRows(1);
+        panel6.add(to);
+        panel6.add(to_date);
+
+        JLabel by = new JLabel("By:");
+        String[] status_choices = {"Return date", "Borrow date"};
+        dropdown = new JComboBox<String>(status_choices);
+        dropdown.setVisible(true);
+        JPanel panel7 = new JPanel();
+        panel7.add(by);
+        panel7.add(dropdown);
+
+
+
         //Search Information
         JLabel labelInfo = new JLabel("Enter Book ID/ISBN/customer ID");
         searchInfo = new JTextField(15);
@@ -56,8 +73,14 @@ class Loanpage extends JFrame {
         panel2.add(searchButton);
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.PAGE_AXIS));
-        panel3.add(panel1);
         panel3.add(panel2);
-        content.add(panel3, BorderLayout.NORTH);
+
+        panel3.add(panel1);
+        JPanel panel8 = new JPanel();
+        panel8.add(panel5,BorderLayout.EAST);
+        panel8.add(panel6,BorderLayout.WEST);
+        panel8.add(panel7,BorderLayout.LINE_END);
+        content.add(panel3,BorderLayout.NORTH);
+        content.add(panel8);
     }
 }
