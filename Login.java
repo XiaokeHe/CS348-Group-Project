@@ -11,7 +11,7 @@ import java.awt.event.*;
  * @version December 12, 2022
  */
 
-public class LoginGUI extends JComponent implements Runnable {
+public class Login extends JComponent implements Runnable {
     public static String username;
     // login GUI fields
     static JFrame loginFrame;
@@ -45,7 +45,7 @@ public class LoginGUI extends JComponent implements Runnable {
         }
     };
 
-    public LoginGUI() {
+    public Login() {
         action = null;
         username = null;
         password = null;

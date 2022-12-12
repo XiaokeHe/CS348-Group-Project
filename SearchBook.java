@@ -1,11 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.math.BigInteger;
 import java.sql.*;
 
-public class SearchBook extends JComponent implements Runnable {
-    static JFrame searchFrame;
+class SearchBook extends JFrame {
     static JTextField searchInfo;
     static JButton searchButton;
     static JComboBox<String> dropdown;
@@ -13,11 +11,6 @@ public class SearchBook extends JComponent implements Runnable {
     private static String action;
     private static String filter;
     Statement statement;
-    public SearchBook(Statement statement) {
-        info = null;
-        action = null;
-        this.statement =statement;
-    }
 
     ActionListener actionListener = new ActionListener() {
         @Override
@@ -52,8 +45,8 @@ public class SearchBook extends JComponent implements Runnable {
                         }
                     }
                     else if (filter.equals("ISBN")) {
-                        String sql = "SELECT Book.book_id, Book_Info.ISBN, Book_Info.title, Book_Info.author, " +
-                                "Book_Info.genre, Book_Info.price, Book.location_id, Book.status " +
+                        String sql = "SELECT Book.book_id AS Book_ID, Book_Info.ISBN AS ISBN, Book_Info.title AS Title, Book_Info.author AS Author, " +
+                                "Book_Info.genre AS Genre, Book_Info.price AS Price, Book.location_id AS Location, Book.status AS Status " +
                                 "FROM Book_Info JOIN Book ON Book.ISBN = Book_Info.ISBN " +
                                 "WHERE Book.ISBN = '" + info + "'";
                         try {
@@ -117,7 +110,7 @@ public class SearchBook extends JComponent implements Runnable {
                             throw new RuntimeException(ex);
                         }
                     }
-                    ShowBookSearchResult result = new ShowBookSearchResult(filter, info, r1);
+                    ShowResult result = new ShowResult(filter, info, r1);
                     SwingUtilities.invokeLater(result);
                 }
             }
@@ -135,16 +128,15 @@ public class SearchBook extends JComponent implements Runnable {
         return info;
     }
 
-    @Override
-    public void run() {
-        //Frame
-        searchFrame = new JFrame("Search Books");
-        Container content = searchFrame.getContentPane();
+    public SearchBook(Statement statement) {
+        super("Search Book");
+        this.statement = statement;
+        Container content = this.getContentPane();
         content.setLayout(new BorderLayout());
-        searchFrame.setSize(600, 200);
-        searchFrame.setLocationRelativeTo(null);
-        searchFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        searchFrame.addWindowListener(windowListener);
+        this.setSize(600, 200);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.addWindowListener(windowListener);
 
         //Dropdown Menu
         JLabel select = new JLabel("Search by:");
@@ -171,6 +163,5 @@ public class SearchBook extends JComponent implements Runnable {
         panel3.add(panel1);
         panel3.add(panel2);
         content.add(panel3, BorderLayout.NORTH);
-        searchFrame.setVisible(true);
     }
 }

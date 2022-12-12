@@ -8,7 +8,7 @@ drop table Employee;
 CREATE TABLE Book(
    book_id varchar(50) PRIMARY KEY,
    ISBN bigint,
-   status varchar(50), 
+   status varchar(50),
    location_id varchar(50)
 );
 

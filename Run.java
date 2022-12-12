@@ -11,23 +11,35 @@ public class Run {
         String jdbc = "jdbc:mysql://localhost:3306/cs348project";
         String username = "root";
         String password = "vnfjriCMDKEO1234";
+        Statement statement = null;
         boolean loggedIn = false;
-
-
-
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = null;
-            try {
-                frame = new Frame("Library Management System", jdbc, username, password);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            frame.setVisible(true);
-        });
-
-
         while (!loggedIn) {
-            LoginGUI login = new LoginGUI();
+            SQLLogin sqllogin = new SQLLogin();
+            SwingUtilities.invokeLater(sqllogin);
+            while (sqllogin.getAction() == null) {
+                Thread.onSpinWait();
+            } // end while
+            jdbc = sqllogin.getUrl();
+            username = sqllogin.getUsername();
+            password = sqllogin.getPassword();
+            try {
+                Connection connection = DriverManager.getConnection(jdbc, username, password);
+                statement = connection.createStatement();
+                loggedIn = true;
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(null, "SQL login failed",
+                        "Message Login", JOptionPane.ERROR_MESSAGE);
+                loggedIn = false;
+            }
+
+            if (loggedIn) {
+                JOptionPane.showMessageDialog(null, "SQL login successful",
+                        "Message Login", JOptionPane.INFORMATION_MESSAGE);
+            } // end if
+        }
+        loggedIn = false;
+        while (!loggedIn) {
+            Login login = new Login();
             SwingUtilities.invokeLater(login);
             while (login.getAction() == null) {
                 Thread.onSpinWait();
@@ -37,8 +49,6 @@ public class Run {
                     String id = login.getUsername();
                     String pw = login.getPassword();
                     try {
-                        Connection connection = DriverManager.getConnection(jdbc, username, password);
-                        Statement statement = connection.createStatement();
                         String sql = "select password from Employee where employee_id = '" + id + "'";
                         ResultSet resultSet = statement.executeQuery (sql);
                         resultSet.next ();
@@ -66,7 +76,7 @@ public class Run {
                         String pw = null;
                         while (name == null || name.equals("")) {
                             name = JOptionPane.showInputDialog(null,
-                                    "Enter Name",
+                                    "Enter Your Name",
                                     "Sign up", JOptionPane.QUESTION_MESSAGE);
                             if (name == null) {
                                 created = true;
@@ -118,8 +128,6 @@ public class Run {
                                 created = true;
                                 loggedIn = true;
                                 try {
-                                    Connection connection = DriverManager.getConnection(jdbc, username, password);
-                                    Statement statement = connection.createStatement();
                                     String sql = "select employee_id from Employee order by employee_id desc limit 1";
                                     ResultSet resultSet = statement.executeQuery (sql);
                                     resultSet.next ();
@@ -154,10 +162,11 @@ public class Run {
                 }
             } // end switch
         } // login complete
+        Statement finalStatement1 = statement;
         SwingUtilities.invokeLater(() -> {
             JFrame frame = null;
             try {
-                frame = new Frame("Library Management System", jdbc, username, password);
+                frame = new Frame("Library Management System", finalStatement1);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

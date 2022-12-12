@@ -2,11 +2,10 @@ import java.awt.*;
 import javax.swing.*;
 
 class Return_book extends JFrame{
-    public Return_book(String title)
-    {
+    public Return_book(String title) {
         super(title);
         setLayout(new BorderLayout());
-        this.setSize(1000,200);
+        this.setSize(200,200);
         Toolkit computer1 = Toolkit.getDefaultToolkit();
         Dimension dim = computer1.getScreenSize();
         int x = (dim.width/2) - (this.getWidth()/2);

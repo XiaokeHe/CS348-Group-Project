@@ -5,7 +5,7 @@ class Borrow extends JFrame {
     public Borrow(String title) {
         super(title);
         setLayout(new BorderLayout());
-        this.setSize(1000,200);
+        this.setSize(100,100);
         Toolkit computer1 = Toolkit.getDefaultToolkit();
         Dimension dim = computer1.getScreenSize();
         int x = (dim.width/2) - (this.getWidth()/2);

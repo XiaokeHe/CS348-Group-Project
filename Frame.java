@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class Frame extends JFrame{
     int flag = -1;
-    public Frame(String title, String jdbc, String username, String password) throws Exception {
+    public Frame(String title, Statement statement) throws Exception {
         super(title);
         setLayout(new BorderLayout());
         this.setSize(500,500);
@@ -36,9 +36,9 @@ public class Frame extends JFrame{
         JPanel child00 = new JPanel(new FlowLayout(FlowLayout.LEFT));
         child00.setBackground(new Color(204,204,204));
         JButton book = new ButtonColor("Manage Book",new Dimension(180,50));
-        JButton customer = new ButtonColor("Manage Customer",new Dimension(180,50));
+        JButton customerButton = new ButtonColor("Manage Customer",new Dimension(180,50));
         child00.add(book);
-        child00.add(customer);
+        child00.add(customerButton);
 
         JPanel child1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
         child1.setSize(200, 100);
@@ -88,21 +88,12 @@ public class Frame extends JFrame{
         ImageIcon logo = new ImageIcon(getClass().getClassLoader().getResource("icon.jpg"));
         this.setIconImage(logo.getImage());
 
-        Connection connection = DriverManager.getConnection(jdbc, username, password);
-        Statement statement = connection.createStatement();
-
-        customer.addActionListener(e -> {
+        book.addActionListener(e -> {
             if(Frame.this.flag==-1){
-                CustomerUI customerUI = new CustomerUI();
-                Manage manage = new Manage(customerUI,statement);
-                SwingUtilities.invokeLater(() -> {
-                    customerUI.setVisible(true);
-                });
-                Borrow fs = new Borrow("Borrow");
-                fs.setVisible(true);
-                fs.setSize(430,430);
+                Manage manage = new Manage("Manage Book", statement);
+                manage.setVisible(true);
                 Frame.this.flag=1;
-                fs.addWindowListener(new WindowAdapter(){
+                manage.addWindowListener(new WindowAdapter(){
                     public void windowClosed(WindowEvent e) {
                         Frame.this.flag=-1;
                     }
@@ -110,12 +101,25 @@ public class Frame extends JFrame{
             }
         });
 
+        customerButton.addActionListener(e -> {
+            if(Frame.this.flag==-1){
+                Customer customer = new Customer("Manage Customer", statement);
+                SwingUtilities.invokeLater(() -> {
+                    customer.setVisible(true);
+                });
+            }
+        });
 
         borrow.addActionListener(e -> {
             if(Frame.this.flag==-1){
-                Borrow fs = new Borrow("Borrow");
+
+            }
+        });
+
+        returnBook.addActionListener(e -> {
+            if(Frame.this.flag==-1){
+                Loan fs = new Loan("Return Book");
                 fs.setVisible(true);
-                fs.setSize(430,430);
                 Frame.this.flag=1;
                 fs.addWindowListener(new WindowAdapter(){
                     public void windowClosed(WindowEvent e) {
@@ -124,13 +128,28 @@ public class Frame extends JFrame{
                 });
             }
         });
-        returnBook.addActionListener(e -> {
+
+        searchBook.addActionListener(e -> {
             if(Frame.this.flag==-1){
-                Return_book fs = new Return_book("Return");
-                fs.setVisible(true);
-                fs.setSize(300,300);
+                SearchBook searchBook1 = new SearchBook(statement);
+                searchBook1.setVisible(true);
+                searchBook1.setSize(520,150);
                 Frame.this.flag=1;
-                fs.addWindowListener(new WindowAdapter(){
+                searchBook1.addWindowListener(new WindowAdapter(){
+                    public void windowClosed(WindowEvent e) {
+                        Frame.this.flag=-1;
+                    }
+                });
+            }
+        });
+
+        showRecord.addActionListener(e -> {
+            if(Frame.this.flag==-1){
+                SearchBook searchBook1 = new SearchBook(statement);
+                searchBook1.setVisible(true);
+                searchBook1.setSize(500,430);
+                Frame.this.flag=1;
+                searchBook1.addWindowListener(new WindowAdapter(){
                     public void windowClosed(WindowEvent e) {
                         Frame.this.flag=-1;
                     }
