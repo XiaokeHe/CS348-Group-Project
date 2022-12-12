@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ShowBookSearchResult extends JComponent implements Runnable {
+public class ShowRecord extends JComponent implements Runnable {
     static JFrame resultFrame;
     private String action;
     //Information
@@ -13,7 +13,7 @@ public class ShowBookSearchResult extends JComponent implements Runnable {
     String bookInfo;
     ResultSet r;
 
-    public ShowBookSearchResult(String filter, String bookInfo, ResultSet r){
+    public ShowRecord(String filter, String bookInfo, ResultSet r){
         this.filter = filter;
         this.bookInfo = bookInfo;
         this.r = r;

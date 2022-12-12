@@ -16,7 +16,7 @@ public class CustomerUI extends JFrame{
 
 
 
-    private CustomerUI() {
+    public CustomerUI() {
         setLayout(new GridBagLayout());
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
@@ -74,10 +74,9 @@ public class CustomerUI extends JFrame{
 
     }
 
-    public static void manage(CustomerUI customerUI, Statement statement) {
+    public void Manage(CustomerUI customerUI, Statement statement) {
         JButton addButton = customerUI.addButton;
         JButton deleteButton = customerUI.deleteButton;
-
 
         addButton.addActionListener((actionEvent) -> {
             String firstname = customerUI.firstnameTextField.getText();
@@ -140,25 +139,6 @@ public class CustomerUI extends JFrame{
                     e2.printStackTrace();
                 }
             }
-
         });
-
-
     }
-
-    public static void main(String[] args) throws SQLException {
-        String jdbc ="jdbc:mysql://localhost:3306/348library";
-        String username = "root";
-        String password = "sophy100098";
-        Connection connection = DriverManager.getConnection(jdbc, username, password);
-        Statement statement = connection.createStatement();
-        CustomerUI customerUI = new CustomerUI();
-        manage(customerUI,statement);
-        SwingUtilities.invokeLater(() -> {
-            customerUI.setVisible(true);
-        });
-
-    }
-
-
 }

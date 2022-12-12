@@ -8,7 +8,7 @@ import java.awt.event.*;
  * Represents the login GUI
  *
  * @author Luka Narisawa
- * @version April 19, 2021
+ * @version December 12, 2022
  */
 
 public class LoginGUI extends JComponent implements Runnable {
