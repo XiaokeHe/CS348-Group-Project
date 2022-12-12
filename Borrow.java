@@ -1,31 +1,24 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Statement;
-import javax.swing.*;
-import javax.swing.plaf.nimbus.State;
-import java.util.Objects;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 
 class Borrow extends JFrame {
     static JButton add;
     static String book_id;
     static String cus_id;
-
-    private static String action;
-
     static JTextArea bookIdField;
     static JTextArea cusIdField;
+    private static String action;
     Statement statement;
     ActionListener actionListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == add) {
                 action = "add";
-                if (!bookIdField.getText().equals("") && !cusIdField.getText().equals("") ) {
+                if (!bookIdField.getText().equals("") && !cusIdField.getText().equals("")) {
                     book_id = bookIdField.getText();
                     cus_id = cusIdField.getText();
                     cusIdField.setText("");
@@ -48,7 +41,7 @@ class Borrow extends JFrame {
                         String sql2 = "INSERT INTO Loan_Record VALUES('" + recordId + "', '" + book_id + "', '"
                                 + cus_id + "', curdate(), null)";
                         int x = statement.executeUpdate(sql2);
-                        String sql3 = "UPDATE Book set status = 'unavailable' where book_id ='"+ book_id+"'";
+                        String sql3 = "UPDATE Book set status = 'unavailable' where book_id ='" + book_id + "'";
                         int y = statement.executeUpdate(sql3);
                         JOptionPane.showMessageDialog(null, "Borrow Success!", "Borrow Info", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception e1) {
@@ -65,24 +58,25 @@ class Borrow extends JFrame {
             action = "closed";
         }
     };
+
     public Borrow(Statement statement) {
         super("Borrow Book");
         this.statement = statement;
         setLayout(new BorderLayout());
-        this.setSize(300,200);
+        this.setSize(300, 200);
         this.setMinimumSize(new Dimension(300, 300));
         this.setMaximumSize(new Dimension(300, 300));
         Toolkit computer1 = Toolkit.getDefaultToolkit();
         Dimension dim = computer1.getScreenSize();
-        int x = (dim.width/2) - (this.getWidth()/2);
-        int y = (dim.height/2) - (this.getHeight()/2);
+        int x = (dim.width / 2) - (this.getWidth() / 2);
+        int y = (dim.height / 2) - (this.getHeight() / 2);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocation(x, y);
         this.setLocationRelativeTo(null);
 
         JPanel parent = new JPanel();
 
-        add = new ButtonColor("Confirm borrow",new Dimension(120,50));
+        add = new ButtonColor("Confirm borrow", new Dimension(120, 50));
         add.addActionListener(actionListener);
         JPanel confirm_box = new JPanel();
         confirm_box.add(add);

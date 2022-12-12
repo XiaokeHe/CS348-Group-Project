@@ -1,21 +1,13 @@
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.sql.Statement;
-import javax.swing.*;
-import java.util.Objects;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.sql.ResultSet;
 
-class ReturnBook extends JFrame{
+class ReturnBook extends JFrame {
     static JButton add;
     static String book_id;
-
-    private static String action;
-
     static JTextArea bookIdField;
+    private static String action;
     Statement statement;
 
     ActionListener actionListener = new ActionListener() {
@@ -33,7 +25,7 @@ class ReturnBook extends JFrame{
                 }
                 if (action != "no") {
                     try {
-                        String sql = "INSERT INTO Loan_Record VALUES('"+ book_id + "')";
+                        String sql = "INSERT INTO Loan_Record VALUES('" + book_id + "')";
                         int x = statement.executeUpdate(sql);
                     } catch (Exception e1) {
                         e1.printStackTrace();
@@ -49,24 +41,25 @@ class ReturnBook extends JFrame{
             action = "closed";
         }
     };
+
     public ReturnBook(Statement statement) {
         super("Return Book");
         this.statement = statement;
         setLayout(new BorderLayout());
-        this.setSize(300,200);
+        this.setSize(300, 200);
         this.setMinimumSize(new Dimension(300, 200));
         this.setMaximumSize(new Dimension(300, 200));
         Toolkit computer1 = Toolkit.getDefaultToolkit();
         Dimension dim = computer1.getScreenSize();
-        int x = (dim.width/2) - (this.getWidth()/2);
-        int y = (dim.height/2) - (this.getHeight()/2);
+        int x = (dim.width / 2) - (this.getWidth() / 2);
+        int y = (dim.height / 2) - (this.getHeight() / 2);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocation(x, y);
         this.setLocationRelativeTo(null);
 
         JPanel parent = new JPanel();
 
-        add = new ButtonColor("Return Book",new Dimension(120,50));
+        add = new ButtonColor("Return Book", new Dimension(120, 50));
         JPanel return_box = new JPanel();
         return_box.add(add);
         add.addActionListener(actionListener);

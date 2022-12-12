@@ -14,13 +14,13 @@ import java.awt.event.*;
 public class SQLLogin extends JComponent implements Runnable {
     public static String url;
     public static String username;
-    private static String password;
-    private static String action;
     static JFrame loginFrame;
     static JTextField urlField;
     static JTextField usernameField;
     static JTextField passwordField;
     static JButton loginButton;
+    private static String password;
+    private static String action;
     ActionListener actionListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -54,9 +54,11 @@ public class SQLLogin extends JComponent implements Runnable {
     public String getUrl() {
         return url;
     }
+
     public String getUsername() {
         return username;
     }
+
     public String getPassword() {
         return password;
     }
@@ -72,7 +74,7 @@ public class SQLLogin extends JComponent implements Runnable {
         JLabel urlLabel = new JLabel("JDBC URL");
         JLabel labelU = new JLabel("SQL Username");
         JLabel labelP = new JLabel("SQL Password");
-        urlField = new JTextField("jdbc:mysql://localhost:3306/cs348project",25); // text field for url
+        urlField = new JTextField("jdbc:mysql://localhost:3306/cs348project", 25); // text field for url
         urlField.addActionListener(actionListener);
         usernameField = new JTextField("root", 10); // text field for username
         usernameField.addActionListener(actionListener);

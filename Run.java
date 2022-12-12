@@ -1,10 +1,8 @@
 import javax.swing.*;
-import javax.swing.SwingUtilities;
-import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Run {
     public static void main(String args[]) {
@@ -51,8 +49,8 @@ public class Run {
                     String pw = login.getPassword();
                     try {
                         String sql = "select password from Employee where employee_id = '" + id + "'";
-                        ResultSet resultSet = statement.executeQuery (sql);
-                        resultSet.next ();
+                        ResultSet resultSet = statement.executeQuery(sql);
+                        resultSet.next();
                         String sql_pw = resultSet.getString("password");
                         if (pw.equals(sql_pw)) {
                             loggedIn = true;
@@ -130,20 +128,20 @@ public class Run {
                                 loggedIn = true;
                                 try {
                                     String sql = "select employee_id from Employee order by employee_id desc limit 1";
-                                    ResultSet resultSet = statement.executeQuery (sql);
-                                    resultSet.next ();
+                                    ResultSet resultSet = statement.executeQuery(sql);
+                                    resultSet.next();
                                     String prevId = resultSet.getString("employee_id");
                                     prevId = prevId.substring(1);
                                     int prevNumber = Integer.parseInt(prevId);
                                     int IdNumber = prevNumber + 1;
-                                    String employee_id = "E"+ String.format("%03d", IdNumber);
-                                    String sql2 = "INSERT INTO Employee VALUES('"+employee_id+"','" + name + "','" + pw + "')";
+                                    String employee_id = "E" + String.format("%03d", IdNumber);
+                                    String sql2 = "INSERT INTO Employee VALUES('" + employee_id + "','" + name + "','" + pw + "')";
                                     statement.execute(sql2);
                                     JOptionPane.showMessageDialog(null, "Sign up successful, Your ID is: " + employee_id,
                                             "Sign up complete", JOptionPane.INFORMATION_MESSAGE);
 
                                 } catch (Exception e1) {
-                                    e1.printStackTrace () ;
+                                    e1.printStackTrace();
                                 }
 
 

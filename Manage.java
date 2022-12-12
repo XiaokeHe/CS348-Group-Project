@@ -1,12 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.math.BigInteger;
-import java.util.Objects;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 class Manage extends JFrame {
     static BigInteger isbn;
@@ -35,7 +33,7 @@ class Manage extends JFrame {
                 if (!isbnField.getText().equals("") && !titleField.getText().equals("") && !authorField.getText().equals("") && !genreField.getText().equals("")) {
                     try {
                         isbn = new BigInteger(isbnField.getText());
-                    } catch(Exception e2) {
+                    } catch (Exception e2) {
                         JOptionPane.showMessageDialog(null, "ISBN has to be 13 digits number",
                                 "Book Info Error", JOptionPane.ERROR_MESSAGE);
                         action = "no";
@@ -62,14 +60,14 @@ class Manage extends JFrame {
                 if (!action.equals("no")) {
                     try {
                         String sql = "select book_id from Book order by book_id desc limit 1";
-                        ResultSet resultSet = statement.executeQuery (sql);
-                        resultSet.next ();
+                        ResultSet resultSet = statement.executeQuery(sql);
+                        resultSet.next();
                         String prevId = resultSet.getString("book_id");
                         prevId = prevId.substring(1);
                         int prevNumber = Integer.parseInt(prevId);
                         int IdNumber = prevNumber + 1;
-                        String bookId = "B"+ String.format("%08d", IdNumber);
-                        String sql2 = "INSERT INTO Book VALUES('"+bookId+"'," + isbn + ",'available', 'L-1-30-009')";
+                        String bookId = "B" + String.format("%08d", IdNumber);
+                        String sql2 = "INSERT INTO Book VALUES('" + bookId + "'," + isbn + ",'available', 'L-1-30-009')";
                         int x = statement.executeUpdate(sql2);
 
                         price = (float) 19.99;
@@ -96,7 +94,7 @@ class Manage extends JFrame {
                     }
                     String getCount = "SELECT COUNT(ISBN) FROM Book WHERE ISBN = '" + ISBN + "'";
                     ResultSet r2 = statement.executeQuery(getCount);
-                    while(r2.next()) {
+                    while (r2.next()) {
                         if (r2.getString("COUNT(ISBN)").equals("1")) {
                             temp = 1;
                         }
@@ -108,8 +106,7 @@ class Manage extends JFrame {
                     String deleteBook = "DELETE FROM Book WHERE book_id='" + book_id + "'";
                     statement.execute(deleteBook);
                     bookIdField.setText("");
-                }
-                catch(Exception e2) {
+                } catch (Exception e2) {
                     e2.printStackTrace();
                 }
             }

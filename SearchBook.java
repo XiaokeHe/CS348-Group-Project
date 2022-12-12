@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 class SearchBook extends JFrame {
@@ -10,7 +12,7 @@ class SearchBook extends JFrame {
     static JButton searchButton;
     static JComboBox<String> dropdown;
     static JPanel panel4;
-        private static String info;
+    private static String info;
     private static String action;
     private static String filter;
     Statement statement;
@@ -25,16 +27,15 @@ class SearchBook extends JFrame {
                 if (searchInfo.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Please enter the book information!",
                             "Missing Information", JOptionPane.ERROR_MESSAGE);
-                }
-                else {
+                } else {
                     ResultSet r1 = null;
                     info = searchInfo.getText();
                     searchInfo.setText("");
                     if (filter.equals("Book ID")) {
-                        if ((!info.substring(0,1).equals("B")) && (!info.substring(0, 1).equals("b"))) {
+                        if ((!info.substring(0, 1).equals("B")) && (!info.substring(0, 1).equals("b"))) {
                             info = "B" + info;
                         }
-                        if (info.substring(0,1).equals("b")) {  // sometimes users will use lowercase
+                        if (info.substring(0, 1).equals("b")) {  // sometimes users will use lowercase
                             info = "B" + info.substring(1);
                         }
                         String sql = "SELECT Book.book_id AS Book_ID, Book_Info.ISBN AS ISBN, Book_Info.title AS Title, Book_Info.author AS Author, " +
@@ -46,8 +47,7 @@ class SearchBook extends JFrame {
                         } catch (SQLException ex) {
                             throw new RuntimeException(ex);
                         }
-                    }
-                    else if (filter.equals("ISBN")) {
+                    } else if (filter.equals("ISBN")) {
                         String sql = "SELECT Book.book_id AS Book_ID, Book_Info.ISBN AS ISBN, Book_Info.title AS Title, Book_Info.author AS Author, " +
                                 "Book_Info.genre AS Genre, Book_Info.price AS Price, Book.location_id AS Location, Book.status AS Status " +
                                 "FROM Book_Info JOIN Book ON Book.ISBN = Book_Info.ISBN " +
@@ -57,13 +57,12 @@ class SearchBook extends JFrame {
                         } catch (SQLException ex) {
                             throw new RuntimeException(ex);
                         }
-                    }
-                    else if (filter.equals("Title")) {
+                    } else if (filter.equals("Title")) {
                         String[] titles = info.split(" ");
                         StringBuilder newInfo = new StringBuilder();
-                        for(String t : titles) {
+                        for (String t : titles) {
                             t = t.toLowerCase();
-                            String first = t.substring(0,1).toUpperCase();
+                            String first = t.substring(0, 1).toUpperCase();
                             newInfo.append(" ").append(first).append(t.substring(1));
                         }
                         String sql = "SELECT Book.book_id AS Book_ID, Book_Info.ISBN AS ISBN, Book_Info.title AS Title, Book_Info.author AS Author, " +
@@ -75,30 +74,28 @@ class SearchBook extends JFrame {
                         } catch (SQLException ex) {
                             throw new RuntimeException(ex);
                         }
-                    }
-                    else if (filter.equals("Author")) {
+                    } else if (filter.equals("Author")) {
                         String[] names = info.split(" ");
                         StringBuilder name = new StringBuilder();
-                        for(String n : names) {
+                        for (String n : names) {
                             n = n.toLowerCase();
-                            String first = n.substring(0,1).toUpperCase();
+                            String first = n.substring(0, 1).toUpperCase();
                             name.append(" ").append(first).append(n.substring(1));
                         }
                         String sql = "SELECT Book.book_id AS Book_ID, Book_Info.ISBN AS ISBN, Book_Info.title AS Title, Book_Info.author AS Author, " +
                                 "Book_Info.genre AS Genre, Book_Info.price AS Price, Book.location_id AS Location, Book.status AS Status " +
                                 "FROM Book_Info JOIN Book ON Book.ISBN = Book_Info.ISBN " +
-                                "WHERE Book_Info.author LIKE '%" +name.substring(1) + "%'";
+                                "WHERE Book_Info.author LIKE '%" + name.substring(1) + "%'";
                         try {
                             r1 = statement.executeQuery(sql);
                         } catch (SQLException ex) {
                             throw new RuntimeException(ex);
                         }
 
-                    }
-                    else {
+                    } else {
                         String[] genres = info.split(" ");
                         StringBuilder genre = new StringBuilder();
-                        for(String g: genres) {
+                        for (String g : genres) {
                             g = g.toLowerCase();
                             String first = g.substring(0, 1).toUpperCase();
                             genre.append(" ").append(first).append(g.substring(1));
@@ -106,7 +103,7 @@ class SearchBook extends JFrame {
                         String sql = "SELECT Book.book_id AS Book_ID, Book_Info.ISBN AS ISBN, Book_Info.title AS Title, Book_Info.author AS Author, " +
                                 "Book_Info.genre AS Genre, Book_Info.price AS Price, Book.location_id AS Location, Book.status AS Status " +
                                 "FROM Book_Info JOIN Book ON Book.ISBN = Book_Info.ISBN " +
-                                "WHERE Book_Info.genre LIKE '%" + genre.substring(1)  + "%'";
+                                "WHERE Book_Info.genre LIKE '%" + genre.substring(1) + "%'";
                         try {
                             r1 = statement.executeQuery(sql);
                         } catch (SQLException ex) {
@@ -124,9 +121,9 @@ class SearchBook extends JFrame {
                     ArrayList<String[]> books = new ArrayList<>();
                     String[] attributes = {"Book_ID", "ISBN", "Title", "Author", "Genre", "Price", "Location", "Status"};
                     try {
-                        while(r1.next()) {
+                        while (r1.next()) {
                             String[] b = new String[attributes.length];
-                            for(int i = 0; i < attributes.length; i++) {
+                            for (int i = 0; i < attributes.length; i++) {
                                 b[i] = r1.getString(attributes[i]);
                             }
                             books.add(b);
@@ -136,7 +133,7 @@ class SearchBook extends JFrame {
                         throw new RuntimeException(ex);
                     }
                     String[][] data = new String[books.size()][attributes.length];
-                    for(int i = 0; i < books.size(); i++) {
+                    for (int i = 0; i < books.size(); i++) {
                         data[i] = books.get(i);
                     }
                     JTable table = new JTable(data, attributes) {
@@ -198,19 +195,6 @@ class SearchBook extends JFrame {
         }
     };
 
-    public String getInfo() {
-        return info;
-    }
-
-    @Override
-    public Dimension getMaximumSize() {
-        return getPreferredSize();
-    }
-
-    public Dimension getPreferredSize() {
-        return new Dimension(1000, 500);
-    }
-
     public SearchBook(Statement statement) {
         super("Search Book");
         this.statement = statement;
@@ -252,5 +236,18 @@ class SearchBook extends JFrame {
         panel3.add(panel2);
         content.add(panel3);
         this.add(content);
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    @Override
+    public Dimension getMaximumSize() {
+        return getPreferredSize();
+    }
+
+    public Dimension getPreferredSize() {
+        return new Dimension(1000, 500);
     }
 }

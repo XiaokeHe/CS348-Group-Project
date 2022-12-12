@@ -1,11 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.math.BigInteger;
-import java.sql.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 
-public class Customer extends JFrame{
+public class Customer extends JFrame {
     private final JTextField firstnameTextField;
     private final JTextField lastnameTextField;
     private final JTextField idTextField;
@@ -24,45 +25,45 @@ public class Customer extends JFrame{
                 String lastname = lastnameTextField.getText();
                 firstnameTextField.setText("");
                 lastnameTextField.setText("");
-                if(firstname.equals("")||lastname.equals("")){
+                if (firstname.equals("") || lastname.equals("")) {
                     JOptionPane.showMessageDialog(null, "Please enter valid first name and" +
                             " last name for customer", "Add Customer", JOptionPane.ERROR_MESSAGE);
                 } else {
                     try {
                         String sql = "select customer_id from Customer order by customer_id desc limit 1";
-                        ResultSet resultSet = statement.executeQuery (sql);
-                        resultSet.next ();
+                        ResultSet resultSet = statement.executeQuery(sql);
+                        resultSet.next();
                         String prevId = resultSet.getString("customer_id");
                         prevId = prevId.substring(1);
                         int prevNumber = Integer.parseInt(prevId);
                         int IdNumber = prevNumber + 1;
-                        String customerId = "C"+ String.format("%08d", IdNumber);
-                        String customerName = firstname+" "+lastname;
-                        String sql2 = "INSERT INTO Customer VALUES('"+customerId+"','" + customerName + "')";
+                        String customerId = "C" + String.format("%08d", IdNumber);
+                        String customerName = firstname + " " + lastname;
+                        String sql2 = "INSERT INTO Customer VALUES('" + customerId + "','" + customerName + "')";
                         statement.execute(sql2);
                         firstnameTextField.setText("");
                         lastnameTextField.setText("");
-                        String message = "The customer has been successfully added! His/Her id is: "+customerId;
+                        String message = "The customer has been successfully added! His/Her id is: " + customerId;
                         JOptionPane.showMessageDialog(null, message, "successfully added"
                                 , JOptionPane.INFORMATION_MESSAGE);
 
                     } catch (Exception e1) {
-                        e1.printStackTrace () ;
+                        e1.printStackTrace();
                     }
                 }
             }
             if (e.getSource() == deleteButton) {
                 String id = idTextField.getText();
-                if(id.equals("")){
+                if (id.equals("")) {
                     JOptionPane.showMessageDialog(null, "Please enter valid customer's ID"
                             , "Delete Customer", JOptionPane.ERROR_MESSAGE);
-                }else {
+                } else {
                     try {
                         String getID = "SELECT count(*) as c FROM Customer WHERE customer_id='" + id + "'";
                         ResultSet r1 = statement.executeQuery(getID);
                         r1.next();
                         String res = r1.getString("c");
-                        if(res == "0") {
+                        if (res == "0") {
                             JOptionPane.showMessageDialog(null, "The customer ID entered does not" +
                                     " exist, please try again", "Delete Customer", JOptionPane.ERROR_MESSAGE);
                         } else {
@@ -74,8 +75,7 @@ public class Customer extends JFrame{
                                     , JOptionPane.INFORMATION_MESSAGE);
                         }
 
-                    }
-                    catch(Exception e2) {
+                    } catch (Exception e2) {
                         e2.printStackTrace();
                     }
                 }
