@@ -112,7 +112,10 @@ public class Frame extends JFrame{
 
         borrow.addActionListener(e -> {
             if(Frame.this.flag==-1){
-
+                Borrow borrow1 = new Borrow(statement);
+                SwingUtilities.invokeLater(() -> {
+                    borrow1.setVisible(true);
+                });
             }
         });
 

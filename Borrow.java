@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.Statement;
 import javax.swing.*;
+import javax.swing.plaf.nimbus.State;
 import java.util.Objects;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,6 +39,7 @@ class Borrow extends JFrame {
                     try {
                         String sql = "INSERT INTO Loan_Record VALUES('"+ book_id + "', '"+ cus_id + "')";
                         int x = statement.executeUpdate(sql);
+                        JOptionPane.showMessageDialog(null, "Borrow Success!", "Borrow Info", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -52,8 +54,9 @@ class Borrow extends JFrame {
             action = "closed";
         }
     };
-    public Borrow(String title) {
-        super(title);
+    public Borrow(Statement statement) {
+        super("Borrow Book");
+        this.statement = statement;
         setLayout(new BorderLayout());
         this.setSize(1000,200);
         Toolkit computer1 = Toolkit.getDefaultToolkit();
