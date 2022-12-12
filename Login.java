@@ -74,9 +74,9 @@ public class Login extends JComponent implements Runnable {
         // username, password, login button on the CENTER
         JLabel labeID = new JLabel("Employee ID");
         JLabel labelP = new JLabel("Password");
-        usernameField = new JTextField(10); // text field for username
+        usernameField = new JTextField("E001", 10); // text field for username
         usernameField.addActionListener(actionListener);
-        passwordField = new JTextField(10); // text field for password
+        passwordField = new JTextField("somepassword", 10); // text field for password
         passwordField.addActionListener(actionListener);
         loginButton = new JButton("Login"); // login button
         loginButton.addActionListener(actionListener);

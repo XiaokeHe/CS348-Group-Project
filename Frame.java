@@ -19,7 +19,7 @@ public class Frame extends JFrame{
         this.setLocation(x, y);
         this.setLocationRelativeTo(null);
 
-        JPanel parent = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel parent = new JPanel(new GridLayout(0, 1));
         parent.setBackground(new Color(204,204,204));
 
         JPanel child0 = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -133,7 +133,6 @@ public class Frame extends JFrame{
             if(Frame.this.flag==-1){
                 SearchBook searchBook1 = new SearchBook(statement);
                 searchBook1.setVisible(true);
-                searchBook1.setSize(520,150);
                 Frame.this.flag=1;
                 searchBook1.addWindowListener(new WindowAdapter(){
                     public void windowClosed(WindowEvent e) {

@@ -120,7 +120,7 @@ class Manage extends JFrame {
         super(title);
         this.statement = statement;
         setLayout(new BorderLayout());
-        this.setSize(300, 500);
+        this.setSize(350, 500);
         Toolkit computer1 = Toolkit.getDefaultToolkit();
         Dimension dim = computer1.getScreenSize();
         int x = (dim.width / 2) - (this.getWidth() / 2);
@@ -128,7 +128,7 @@ class Manage extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocation(x, y);
         this.setLocationRelativeTo(null);
-        this.setMinimumSize(new Dimension(300, 500));
+        this.setMinimumSize(new Dimension(350, 500));
         addButton = new ButtonColor("Add Book", new Dimension(180, 40));
         addButton.addActionListener(actionListener);
         deleteButton = new ButtonColor("Delete Book", new Dimension(180, 40));

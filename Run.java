@@ -35,6 +35,7 @@ public class Run {
             if (loggedIn) {
                 JOptionPane.showMessageDialog(null, "SQL login successful",
                         "Message Login", JOptionPane.INFORMATION_MESSAGE);
+
             } // end if
         }
         loggedIn = false;
