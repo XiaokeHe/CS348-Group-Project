@@ -80,7 +80,7 @@ public class Frame extends JFrame{
 
         book.addActionListener(e -> {
             if(Frame.this.flag==-1){
-                Manage manage = new Manage("Manage Book", statement);
+                Manage manage = new Manage(statement);
                 manage.setVisible(true);
                 Frame.this.flag=1;
                 manage.addWindowListener(new WindowAdapter(){
@@ -93,9 +93,14 @@ public class Frame extends JFrame{
 
         customerButton.addActionListener(e -> {
             if(Frame.this.flag==-1){
-                Customer customer = new Customer("Manage Customer", statement);
+                Customer customer = new Customer(statement);
                 SwingUtilities.invokeLater(() -> {
                     customer.setVisible(true);
+                });
+                customer.addWindowListener(new WindowAdapter(){
+                    public void windowClosed(WindowEvent e) {
+                        Frame.this.flag=-1;
+                    }
                 });
             }
         });
@@ -106,12 +111,17 @@ public class Frame extends JFrame{
                 SwingUtilities.invokeLater(() -> {
                     borrow1.setVisible(true);
                 });
+                borrow1.addWindowListener(new WindowAdapter(){
+                    public void windowClosed(WindowEvent e) {
+                        Frame.this.flag=-1;
+                    }
+                });
             }
         });
 
         returnBook.addActionListener(e -> {
             if(Frame.this.flag==-1){
-                Return_book fs = new Return_book(statement);
+                ReturnBook fs = new ReturnBook(statement);
                 fs.setVisible(true);
                 Frame.this.flag=1;
                 fs.addWindowListener(new WindowAdapter(){
@@ -139,7 +149,6 @@ public class Frame extends JFrame{
             if(Frame.this.flag==-1){
                 SearchBook searchBook1 = new SearchBook(statement);
                 searchBook1.setVisible(true);
-                searchBook1.setSize(500,430);
                 Frame.this.flag=1;
                 searchBook1.addWindowListener(new WindowAdapter(){
                     public void windowClosed(WindowEvent e) {

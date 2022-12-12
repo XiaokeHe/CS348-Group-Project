@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
-class Return_book extends JFrame{
+class ReturnBook extends JFrame{
     static JButton add;
     static String book_id;
 
@@ -49,11 +49,13 @@ class Return_book extends JFrame{
             action = "closed";
         }
     };
-    public Return_book(Statement statement) {
+    public ReturnBook(Statement statement) {
         super("Return Book");
         this.statement = statement;
         setLayout(new BorderLayout());
-        this.setSize(1000,200);
+        this.setSize(300,200);
+        this.setMinimumSize(new Dimension(300, 200));
+        this.setMaximumSize(new Dimension(300, 200));
         Toolkit computer1 = Toolkit.getDefaultToolkit();
         Dimension dim = computer1.getScreenSize();
         int x = (dim.width/2) - (this.getWidth()/2);

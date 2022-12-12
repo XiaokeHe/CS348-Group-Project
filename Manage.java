@@ -116,8 +116,8 @@ class Manage extends JFrame {
         }
     };
 
-    public Manage(String title, Statement statement) {
-        super(title);
+    public Manage(Statement statement) {
+        super("Manage Book");
         this.statement = statement;
         setLayout(new BorderLayout());
         this.setSize(350, 500);
@@ -206,7 +206,6 @@ class Manage extends JFrame {
         parent.add(delete);
         parent.add(adjust);
         this.add(parent);
-        this.statement = statement;
     }
 
     public static String getAction() {

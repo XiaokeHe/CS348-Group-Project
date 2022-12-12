@@ -163,19 +163,27 @@ class SearchBook extends JFrame {
                         }
                     };
                     panel2.add(table.getTableHeader(), BorderLayout.NORTH);
-                    panel2.add(table);
-                    if (panel4 != null) {
-                        content.remove(panel4);
-                    }
-                    panel4 = new JPanel(new FlowLayout(FlowLayout.LEFT)) {
+                    JPanel panel3 = new JPanel() {
                         @Override
                         public Dimension getMaximumSize() {
                             return getPreferredSize();
                         }
                     };
-                    panel4.setLayout(new BoxLayout(panel4, BoxLayout.PAGE_AXIS));
+                    panel3.add(table);
+                    if (panel4 != null) {
+                        content.remove(panel4);
+                    }
+                    panel4 = new JPanel() {
+                        @Override
+                        public Dimension getMaximumSize() {
+                            return getPreferredSize();
+                        }
+                    };
+                    BoxLayout layout = new BoxLayout(panel4, BoxLayout.PAGE_AXIS);
+                    panel4.setLayout(layout);
                     panel4.add(panel1);
                     panel4.add(panel2);
+                    panel4.add(panel3);
                     content.add(panel4);
                     setVisible(true);
                 }

@@ -58,7 +58,9 @@ class Borrow extends JFrame {
         super("Borrow Book");
         this.statement = statement;
         setLayout(new BorderLayout());
-        this.setSize(1000,200);
+        this.setSize(300,200);
+        this.setMinimumSize(new Dimension(300, 300));
+        this.setMaximumSize(new Dimension(300, 300));
         Toolkit computer1 = Toolkit.getDefaultToolkit();
         Dimension dim = computer1.getScreenSize();
         int x = (dim.width/2) - (this.getWidth()/2);

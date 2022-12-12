@@ -83,8 +83,8 @@ public class Customer extends JFrame{
         }
     };
 
-    public Customer(String title, Statement statement) {
-        super(title);
+    public Customer(Statement statement) {
+        super("Manage Customer");
         this.statement = statement;
         setLayout(new BorderLayout());
         this.setSize(300, 300);
