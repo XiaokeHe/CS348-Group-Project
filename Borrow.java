@@ -38,6 +38,8 @@ class Borrow extends JFrame {
                     try {
                         String sql = "INSERT INTO Loan_Record VALUES('"+ book_id + "', '"+ cus_id + "')";
                         int x = statement.executeUpdate(sql);
+                        JOptionPane.showMessageDialog(null, "Borrow Success!",
+                                "Borrow Info", JOptionPane.ERROR_MESSAGE);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
