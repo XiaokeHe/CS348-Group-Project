@@ -20,21 +20,17 @@ public class Frame extends JFrame{
         this.setLocationRelativeTo(null);
 
         JPanel parent = new JPanel(new GridLayout(0, 1));
-        parent.setBackground(new Color(204,204,204));
 
         JPanel child0 = new JPanel(new FlowLayout(FlowLayout.LEFT));
         child0.setSize(200, 100);
-        child0.setBackground(new Color(204,204,204));
         JLabel addDelete = new JLabel("Add/Delete information");
         addDelete.setSize(new Dimension(200, 100));
         Font f = new Font("TimesRoman",Font.PLAIN,20);
         addDelete.setFont(f);
         addDelete.setBounds(80,20,250,80);
-        addDelete.setBackground(new Color(204,204,204));
         child0.add(addDelete);
 
         JPanel child00 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        child00.setBackground(new Color(204,204,204));
         JButton book = new ButtonColor("Manage Book",new Dimension(180,50));
         JButton customerButton = new ButtonColor("Manage Customer",new Dimension(180,50));
         child00.add(book);
@@ -42,18 +38,15 @@ public class Frame extends JFrame{
 
         JPanel child1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
         child1.setSize(200, 100);
-        child1.setBackground(new Color(204,204,204));
         JLabel borrowReturn = new JLabel("Book Transactions");
         borrowReturn.setSize(new Dimension(200, 100));
         Font f1 = new Font("TimesRoman",Font.PLAIN,20);
         borrowReturn.setFont(f1);
         borrowReturn.setBounds(80,20,250,80);
-        borrowReturn.setBackground(new Color(204,204,204));
         child1.add(borrowReturn);
 
 
         JPanel child11 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        child11.setBackground(new Color(204,204,204));
         JButton borrow = new ButtonColor("Borrow Book",new Dimension(180,50));
         JButton returnBook = new ButtonColor("Return Book",new Dimension(180,50));
         child11.add(borrow);
@@ -61,17 +54,14 @@ public class Frame extends JFrame{
 
         JPanel child2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
         child2.setSize(200, 100);
-        child2.setBackground(new Color(204,204,204));
         JLabel search = new JLabel("Search information");
         search.setSize(new Dimension(200, 100));
         Font f2 = new Font("TimesRoman",Font.PLAIN,20);
         search.setFont(f2);
         search.setBounds(80,20,250,80);
-        search.setBackground(new Color(204,204,204));
         child2.add(search);
 
         JPanel child22 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        child22.setBackground(new Color(204,204,204));
         JButton searchBook = new ButtonColor("Search Book",new Dimension(180,50));
         JButton showRecord = new ButtonColor("Show Record",new Dimension(180,50));
         child22.add(searchBook);

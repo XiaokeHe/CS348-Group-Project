@@ -157,7 +157,7 @@ class SearchBook extends JFrame {
                     panel3.setLayout(new BoxLayout(panel3, BoxLayout.PAGE_AXIS));
                     panel3.add(panel1);
                     panel3.add(panel2);
-                    content.add(panel3, BorderLayout.CENTER);
+                    content.add(panel3);
                     setVisible(true);
                 }
             }
@@ -173,6 +173,15 @@ class SearchBook extends JFrame {
 
     public String getInfo() {
         return info;
+    }
+
+    @Override
+    public Dimension getMaximumSize() {
+        return getPreferredSize();
+    }
+
+    public Dimension getPreferredSize() {
+        return new Dimension(1000, 500);
     }
 
     public SearchBook(Statement statement) {
@@ -207,9 +216,14 @@ class SearchBook extends JFrame {
         panel2.add(labelInfo);
         panel2.add(searchInfo);
         panel2.add(searchButton);
-        JPanel panel3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel panel3 = new JPanel(new FlowLayout(FlowLayout.LEFT)) {
+            @Override
+            public Dimension getMaximumSize() {
+                return getPreferredSize();
+            }
+        };
         panel3.add(panel1);
         panel3.add(panel2);
-        content.add(panel3, BorderLayout.NORTH);
+        content.add(panel3);
     }
 }
