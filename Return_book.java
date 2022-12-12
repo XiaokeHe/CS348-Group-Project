@@ -17,7 +17,6 @@ class Return_book extends JFrame{
 
     static JTextArea bookIdField;
     Statement statement;
-
     ActionListener actionListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -33,8 +32,12 @@ class Return_book extends JFrame{
                 }
                 if (action != "no") {
                     try {
-                        String sql = "INSERT INTO Loan_Record VALUES('"+ book_id + "')";
-                        int x = statement.executeUpdate(sql);
+                        String sql = "select record_id from Loan_Record order where book_id = '"+ book_id + "' and return date is NULL";
+                        ResultSet resultSet = statement.executeQuery(sql);
+                        resultSet.next();
+                        String record_id = resultSet.getString("record_id");
+                        String sql2 = "UPDATE Loan_Record SET return_date = curdate() WHERE record_id = '"+record_id+"' ";
+                        int x = statement.executeUpdate(sql2);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -49,9 +52,9 @@ class Return_book extends JFrame{
             action = "closed";
         }
     };
-    public Return_book(Statement statement) {
-        super("Return Book");
-        this.statement = statement;
+    public Return_book(String title)
+    {
+        super(title);
         setLayout(new BorderLayout());
         this.setSize(1000,200);
         Toolkit computer1 = Toolkit.getDefaultToolkit();
