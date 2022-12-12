@@ -2,12 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
-import java.sql.*;
 
 
 public class Frame extends JFrame{
     int flag = -1;
-    public Frame(String title, String jdbc, String username, String password) throws Exception {
+    public Frame(String title)
+    {
         super(title);
         setLayout(new BorderLayout());
         this.setSize(400,200);
@@ -19,10 +19,8 @@ public class Frame extends JFrame{
         this.setLocation(x, y);
         this.setLocationRelativeTo(null);
 
-        JButton search = new ButtonColor("Search",new Dimension(120,50));
-        JButton manage = new ButtonColor("Manage",new Dimension(120,50));
-        search.setToolTipText("Create a Server and send data");
-        manage.setToolTipText("Create a Client and receive data");
+        JButton borrow = new ButtonColor("Borrow Book",new Dimension(120,50));
+        JButton return_book = new ButtonColor("Return Book",new Dimension(120,50));
         JPanel parent = new JPanel();
         parent.setBackground(new Color(204,204,204));
         JPanel child1 = new JPanel();
@@ -30,8 +28,8 @@ public class Frame extends JFrame{
         JPanel child2 = new JPanel();
         child2.setBackground(new Color(204,204,204));
         child1.setLayout(new FlowLayout(FlowLayout.CENTER));
-        child1.add(search);
-        child1.add(manage);
+        child1.add(borrow);
+        child1.add(return_book);
         parent.add(child1);
         parent.add(child2);
         this.add(parent);
@@ -39,12 +37,9 @@ public class Frame extends JFrame{
         ImageIcon logo = new ImageIcon(getClass().getClassLoader().getResource("icon.jpg"));
         this.setIconImage(logo.getImage());
 
-        Connection connection = DriverManager.getConnection(jdbc, username, password);
-        Statement statement = connection.createStatement();
-
-        search.addActionListener(e -> {
+        borrow.addActionListener(e -> {
             if(Frame.this.flag==-1){
-                Search fs = new Search("Search Information");
+                Borrow fs = new Borrow("Borrow");
                 fs.setVisible(true);
                 fs.setSize(430,430);
                 Frame.this.flag=1;
@@ -55,9 +50,9 @@ public class Frame extends JFrame{
                 });
             }
         });
-        manage.addActionListener(e -> {
+        return_book.addActionListener(e -> {
             if(Frame.this.flag==-1){
-                Manage fs = new Manage("Information Management", statement);
+                Return_book fs = new Return_book("Return");
                 fs.setVisible(true);
                 fs.setSize(300,300);
                 Frame.this.flag=1;
@@ -68,5 +63,9 @@ public class Frame extends JFrame{
                 });
             }
         });
+
+
     }
+
+
 }
