@@ -29,10 +29,21 @@ class Loanpage extends JFrame {
         String[] choices = {"Book ID", "ISBN", "Customer ID"};
         dropdown = new JComboBox<String>(choices);
         dropdown.setVisible(true);
+        
+
+
+        String[] time_choices = {"Past 30 days", "Past 10 days"};
+        dropdown = new JComboBox<String>(time_choices);
+        dropdown.setVisible(true);
+        
+        String[] status_choices = {"Return", "Borrow"};
+        dropdown = new JComboBox<String>(status_choices);
+        dropdown.setVisible(true);
+
         JPanel panel1 = new JPanel();
         panel1.add(select);
         panel1.add(dropdown);
-
+        
         //Search Information
         JLabel labelInfo = new JLabel("Enter Book ID/ISBN/customer ID");
         searchInfo = new JTextField(15);
