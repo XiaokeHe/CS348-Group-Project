@@ -74,6 +74,9 @@ class Manage extends JFrame {
                         String addBookInfo = "INSERT INTO Book_Info VALUES(" + isbn + ",'" + titles + "','" + author + "','"
                                 + genre + "'," + price + ")";
                         statement.execute(addBookInfo);
+                        String message = "The book has been successfully added!";
+                        JOptionPane.showMessageDialog(null, message, "successfully added"
+                                , JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -106,6 +109,10 @@ class Manage extends JFrame {
                     String deleteBook = "DELETE FROM Book WHERE book_id='" + book_id + "'";
                     statement.execute(deleteBook);
                     bookIdField.setText("");
+                    String message = "The book has been successfully deleted!";
+                    JOptionPane.showMessageDialog(null, message, "successfully deleted"
+                            , JOptionPane.INFORMATION_MESSAGE);
+
                 } catch (Exception e2) {
                     e2.printStackTrace();
                 }
