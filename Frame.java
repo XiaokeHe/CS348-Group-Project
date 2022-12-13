@@ -150,14 +150,18 @@ public class Frame extends JFrame {
 
         showRecord.addActionListener(e -> {
             if (Frame.this.flag == -1) {
-                ShowRecord showRecord1 = new ShowRecord(statement);
-                showRecord1.setVisible(true);
-                Frame.this.flag = 1;
-                showRecord1.addWindowListener(new WindowAdapter() {
-                    public void windowClosed(WindowEvent e) {
-                        Frame.this.flag = -1;
-                    }
-                });
+                try {
+                    ShowRecord showRecord1 = new ShowRecord(statement);
+                    showRecord1.setVisible(true);
+                    Frame.this.flag = 1;
+                    showRecord1.addWindowListener(new WindowAdapter() {
+                        public void windowClosed(WindowEvent e) {
+                            Frame.this.flag = -1;
+                        }
+                    });
+                } catch (Exception e1 ) {
+                    e1.printStackTrace();
+                }
             }
         });
     }

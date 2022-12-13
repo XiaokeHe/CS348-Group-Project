@@ -2,7 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.text.*;
 import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 class ShowRecord extends JFrame {
     Statement statement;
@@ -151,7 +154,7 @@ class ShowRecord extends JFrame {
         }
     };
 
-    public ShowRecord(Statement statement) {
+    public ShowRecord(Statement statement) throws Exception {
         super("Search Loan Record");
         this.statement = statement;
         content = Box.createVerticalBox();
@@ -174,9 +177,11 @@ class ShowRecord extends JFrame {
 
         JLabel from = new JLabel("From:");
         from.setVisible(true);
-        from_date = new JTextArea();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        JFormattedTextField from_date = new JFormattedTextField(format);
+        LocalDateTime now = LocalDateTime.now();
+        from_date.setValue(format.parse("2000-01-01"));
         from_date.setColumns(10);
-        from_date.setRows(1);
         JPanel panel5 = new JPanel();
         panel5.add(from);
         panel5.add(from_date);
@@ -184,9 +189,9 @@ class ShowRecord extends JFrame {
         JLabel to = new JLabel("To:");
         to.setVisible(true);
         JPanel panel6 = new JPanel();
-        to_date = new JTextArea();
-        to_date.setColumns(10);
-        to_date.setRows(1);
+        JFormattedTextField to_date = new JFormattedTextField(format);
+        to_date.setValue(format.parse(now.toString()));
+        to_date.setColumns(10);;
         panel6.add(to);
         panel6.add(to_date);
 
