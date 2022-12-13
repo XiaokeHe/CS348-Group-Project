@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
-class Return_book extends JFrame{
+class ReturnBook extends JFrame{
     static JButton add;
     static String book_id;
 
@@ -32,13 +32,17 @@ class Return_book extends JFrame{
                 }
                 if (action != "no") {
                     try {
-                        String sql = "select record_id from Loan_Record order where book_id = '"+ book_id + "' and return date is NULL";
+                        String sql = "select record_id from Loan_Record where book_id = '"+ book_id +
+                                "' and return_date is NULL";
                         ResultSet resultSet = statement.executeQuery(sql);
                         resultSet.next();
                         String record_id = resultSet.getString("record_id");
-                        String sql2 = "UPDATE Loan_Record SET return_date = curdate() WHERE record_id = '"+record_id+"' ";
+                        String sql2 = "UPDATE Loan_Record SET return_date = curdate() WHERE record_id = '"+record_id+"'";
                         int x = statement.executeUpdate(sql2);
-                        JOptionPane.showMessageDialog(null, "Update Success!", "Update Info", JOptionPane.INFORMATION_MESSAGE);
+                        String sql3 = "UPDATE Book set status = 'available' where book_id ='" + book_id + "'";
+                        int y = statement.executeUpdate(sql3);
+                        JOptionPane.showMessageDialog(null, "Return Success!", "Return Book"
+                                , JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -53,9 +57,9 @@ class Return_book extends JFrame{
             action = "closed";
         }
     };
-    public Return_book(String title)
-    {
-        super(title);
+    public ReturnBook(Statement statement) {
+        super("Return Book");
+        this.statement = statement;
         setLayout(new BorderLayout());
         this.setSize(1000,200);
         Toolkit computer1 = Toolkit.getDefaultToolkit();
