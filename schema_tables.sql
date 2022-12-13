@@ -24,8 +24,8 @@ CREATE TABLE Loan_Record(
     record_id varchar(50) PRIMARY KEY,
     book_id varchar(50),
     customer_id varchar(50),
-    borrow_date integer,
-    return_date integer
+    borrow_date DATE,
+    return_date DATE
 );
 
 

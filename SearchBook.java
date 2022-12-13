@@ -110,12 +110,6 @@ class SearchBook extends JFrame {
                             throw new RuntimeException(ex);
                         }
                     }
-                    JPanel panel1 = new JPanel() {
-                        @Override
-                        public Dimension getMaximumSize() {
-                            return getPreferredSize();
-                        }
-                    };
 
                     //Get books
                     ArrayList<String[]> books = new ArrayList<>();
@@ -151,6 +145,12 @@ class SearchBook extends JFrame {
                     table.getColumnModel().getColumn(6).setPreferredWidth(90);
                     table.getColumnModel().getColumn(7).setPreferredWidth(70);
                     String s = "Search by: " + filter + " : " + info + " (" + data.length + " book(s) are found)";
+                    JPanel panel1 = new JPanel() {
+                        @Override
+                        public Dimension getMaximumSize() {
+                            return getPreferredSize();
+                        }
+                    };
                     JLabel summary = new JLabel(s);
                     panel1.add(summary);
                     JPanel panel2 = new JPanel() {

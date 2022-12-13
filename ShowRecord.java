@@ -1,10 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.sql.*;
+import java.util.ArrayList;
 
-class Loanpage extends JFrame {
+class ShowRecord extends JFrame {
     Statement statement;
     static Container content;
     static JTextField searchInfo;
@@ -12,6 +12,7 @@ class Loanpage extends JFrame {
     static JTextArea to_date;
     static JButton searchButton;
     static JComboBox<String> dropdown;
+    static JPanel panel4;
     private static String info;
     private static String action;
     private static String filter;
@@ -35,7 +36,7 @@ class Loanpage extends JFrame {
                     from_date.setText("");
                     to_date.setText("");
                     searchInfo.setText("");
-                    ResultSet r; // Result is here!!!!!!!!!!!
+                    ResultSet r = null; // Result is here!!!!!!!!!!!
                     if (filter.equals("Book ID")) {
                         if ((!info.substring(0,1).equals("B")) && (!info.substring(0, 1).equals("b"))) {
                             info = "B" + info;
@@ -68,21 +69,97 @@ class Loanpage extends JFrame {
                             throw new RuntimeException(ex);
                         }
                     }
+                    //Get books
+                    ArrayList<String[]> books = new ArrayList<>();
+                    String[] attributes = {"record_id", "book_id", "customer_id", "borrow_date", "return_date"};
+                    try {
+                        while (r.next()) {
+                            String[] b = new String[attributes.length];
+                            for (int i = 0; i < attributes.length; i++) {
+                                b[i] = r.getString(attributes[i]);
+                            }
+                            books.add(b);
+                        }
+
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    String[][] data = new String[books.size()][attributes.length];
+                    for (int i = 0; i < books.size(); i++) {
+                        data[i] = books.get(i);
+                    }
+                    JTable table = new JTable(data, attributes) {
+                        @Override
+                        public Dimension getMaximumSize() {
+                            return new Dimension(300, 300);
+                        }
+                    };
+                    table.setVisible(true);
+                    table.getColumnModel().getColumn(1).setPreferredWidth(110);
+                    table.getColumnModel().getColumn(2).setPreferredWidth(140);
+                    table.getColumnModel().getColumn(3).setPreferredWidth(140);
+                    table.getColumnModel().getColumn(4).setPreferredWidth(170);
+                    String s = "Search by: " + filter + " : " + info + " (" + data.length + " book(s) are found)";
+                    JPanel panel1 = new JPanel() {
+                        @Override
+                        public Dimension getMaximumSize() {
+                            return getPreferredSize();
+                        }
+                    };
+                    JLabel summary = new JLabel(s);
+                    panel1.add(summary);
+                    JPanel panel2 = new JPanel() {
+                        @Override
+                        public Dimension getMaximumSize() {
+                            return getPreferredSize();
+                        }
+                    };
+                    panel2.add(table.getTableHeader(), BorderLayout.NORTH);
+                    JPanel panel3 = new JPanel() {
+                        @Override
+                        public Dimension getMaximumSize() {
+                            return getPreferredSize();
+                        }
+                    };
+                    panel3.add(table);
+                    if (panel4 != null) {
+                        content.remove(panel4);
+                    }
+                    panel4 = new JPanel() {
+                        @Override
+                        public Dimension getMaximumSize() {
+                            return getPreferredSize();
+                        }
+                    };
+                    BoxLayout layout = new BoxLayout(panel4, BoxLayout.PAGE_AXIS);
+                    panel4.setLayout(layout);
+                    panel4.add(panel1);
+                    panel4.add(panel2);
+                    panel4.add(panel3);
+                    content.add(panel4);
+                    setVisible(true);
                 }
             }
         }
     };
 
-    public Loanpage(Statement statement) {
+    WindowListener windowListener = new WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent e) {
+            action = "close";
+        }
+    };
+
+    public ShowRecord(Statement statement) {
         super("Search Loan Record");
         this.statement = statement;
-        content = this.getContentPane();
-        content.setLayout(new BorderLayout());
+        content = Box.createVerticalBox();
         this.setSize(1000, 500);
         this.setMinimumSize(new Dimension(1000, 500));
+        this.setMaximumSize(new Dimension(1000, 2000));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+        this.addWindowListener(windowListener);
 
         //Dropdown Menu
         JLabel select = new JLabel("Search by:");
@@ -112,7 +189,6 @@ class Loanpage extends JFrame {
         panel6.add(to);
         panel6.add(to_date);
 
-
         //Search Information
         JLabel labelInfo = new JLabel("Enter Book Information: ");
         searchInfo = new JTextField(15);
@@ -120,21 +196,38 @@ class Loanpage extends JFrame {
         searchButton = new JButton("Search");
         searchButton.addActionListener(actionListener);
 
-
-        JPanel panel2 = new JPanel();
-        panel2.add(labelInfo);
-        panel2.add(searchInfo);
-        panel2.add(searchButton);
-        JPanel panel3 = new JPanel();
+        panel1.add(labelInfo);
+        panel1.add(searchInfo);
+        panel1.add(searchButton);
+        JPanel panel3 = new JPanel(new FlowLayout(FlowLayout.LEFT)) {
+            @Override
+            public Dimension getMaximumSize() {
+                return getPreferredSize();
+            }
+        };
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.PAGE_AXIS));
-        panel3.add(panel2);
 
         panel3.add(panel1);
-        JPanel panel8 = new JPanel();
+        JPanel panel8 = new JPanel(new FlowLayout(FlowLayout.LEFT)) {
+            @Override
+            public Dimension getMaximumSize() {
+                return getPreferredSize();
+            }
+        };
         panel8.add(panel5,BorderLayout.EAST);
         panel8.add(panel6,BorderLayout.WEST);
-        content.add(panel3,BorderLayout.NORTH);
+        content.add(panel3);
         content.add(panel8);
+        this.add(content);
+    }
+
+    @Override
+    public Dimension getMaximumSize() {
+        return getPreferredSize();
+    }
+
+    public Dimension getPreferredSize() {
+        return new Dimension(1000, 500);
     }
 }
 

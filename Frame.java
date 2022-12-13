@@ -150,10 +150,10 @@ public class Frame extends JFrame {
 
         showRecord.addActionListener(e -> {
             if (Frame.this.flag == -1) {
-                SearchBook searchBook1 = new SearchBook(statement);
-                searchBook1.setVisible(true);
+                ShowRecord showRecord1 = new ShowRecord(statement);
+                showRecord1.setVisible(true);
                 Frame.this.flag = 1;
-                searchBook1.addWindowListener(new WindowAdapter() {
+                showRecord1.addWindowListener(new WindowAdapter() {
                     public void windowClosed(WindowEvent e) {
                         Frame.this.flag = -1;
                     }
