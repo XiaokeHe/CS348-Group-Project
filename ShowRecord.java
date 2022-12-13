@@ -11,11 +11,11 @@ class ShowRecord extends JFrame {
     Statement statement;
     static Container content;
     static JTextField searchInfo;
-    static JTextArea from_date;
-    static JTextArea to_date;
     static JButton searchButton;
     static JComboBox<String> dropdown;
     static JPanel panel4;
+    static JFormattedTextField from_date;
+    static JFormattedTextField to_date;
     private static String info;
     private static String action;
     private static String filter;
@@ -28,7 +28,8 @@ class ShowRecord extends JFrame {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == searchButton) {
                 filter = dropdown.getSelectedItem().toString();
-                if (searchInfo.getText().equals("") || from_date.getText().equals("") || to_date.getText().equals("")) {
+                if (searchInfo.getText() == null || from_date.getText() == null || to_date.getText() == null ||
+                        searchInfo.getText().equals("") || from_date.getText().equals("") || to_date.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Please enter all the information!",
                             "Missing Information", JOptionPane.ERROR_MESSAGE);
                 }
@@ -36,8 +37,14 @@ class ShowRecord extends JFrame {
                     start_date = from_date.getText();
                     end_date = to_date.getText();
                     info = searchInfo.getText();
-                    from_date.setText("");
-                    to_date.setText("");
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    LocalDateTime now = LocalDateTime.now();
+                    try {
+                        from_date.setValue(format.parse("2000-01-01"));
+                        to_date.setValue(format.parse(now.toString()));
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
                     searchInfo.setText("");
                     ResultSet r = null; // Result is here!!!!!!!!!!!
                     if (filter.equals("Book ID")) {
@@ -178,7 +185,7 @@ class ShowRecord extends JFrame {
         JLabel from = new JLabel("From:");
         from.setVisible(true);
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        JFormattedTextField from_date = new JFormattedTextField(format);
+        from_date = new JFormattedTextField(format);
         LocalDateTime now = LocalDateTime.now();
         from_date.setValue(format.parse("2000-01-01"));
         from_date.setColumns(10);
@@ -189,7 +196,7 @@ class ShowRecord extends JFrame {
         JLabel to = new JLabel("To:");
         to.setVisible(true);
         JPanel panel6 = new JPanel();
-        JFormattedTextField to_date = new JFormattedTextField(format);
+        to_date = new JFormattedTextField(format);
         to_date.setValue(format.parse(now.toString()));
         to_date.setColumns(10);;
         panel6.add(to);
