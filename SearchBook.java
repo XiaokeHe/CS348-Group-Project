@@ -23,7 +23,6 @@ class SearchBook extends JFrame {
             if (e.getSource() == searchButton) {
                 action = "search";
                 filter = dropdown.getSelectedItem().toString();
-                System.out.println(filter);
                 if (searchInfo.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Please enter the book information!",
                             "Missing Information", JOptionPane.ERROR_MESSAGE);
