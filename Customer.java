@@ -63,7 +63,7 @@ public class Customer extends JFrame {
                         ResultSet r1 = statement.executeQuery(getID);
                         r1.next();
                         String res = r1.getString("c");
-                        if (res == "0") {
+                        if (res.equals("0")) {
                             JOptionPane.showMessageDialog(null, "The customer ID entered does not" +
                                     " exist, please try again", "Delete Customer", JOptionPane.ERROR_MESSAGE);
                         } else {

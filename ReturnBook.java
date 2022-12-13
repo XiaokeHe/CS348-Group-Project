@@ -61,7 +61,7 @@ class ReturnBook extends JFrame{
         super("Return Book");
         this.statement = statement;
         setLayout(new BorderLayout());
-        this.setSize(1000,200);
+        this.setSize(500,200);
         Toolkit computer1 = Toolkit.getDefaultToolkit();
         Dimension dim = computer1.getScreenSize();
         int x = (dim.width/2) - (this.getWidth()/2);
