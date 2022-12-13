@@ -124,6 +124,7 @@ class ShowRecord extends JFrame {
                     panel3.add(table);
                     if (panel4 != null) {
                         content.remove(panel4);
+                        setVisible(false);
                     }
                     panel4 = new JPanel() {
                         @Override
