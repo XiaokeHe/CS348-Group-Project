@@ -70,7 +70,7 @@ public class Customer extends JFrame {
                             String delete = "DELETE FROM Customer WHERE customer_id='" + id + "'";
                             statement.execute(delete);
                             idTextField.setText("");
-                            String message = "The customer has been successfully deleteed!";
+                            String message = "The customer has been successfully deleted!";
                             JOptionPane.showMessageDialog(null, message, "successfully deleted"
                                     , JOptionPane.INFORMATION_MESSAGE);
                         }
