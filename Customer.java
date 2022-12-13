@@ -87,7 +87,9 @@ public class Customer extends JFrame {
         super("Manage Customer");
         this.statement = statement;
         setLayout(new BorderLayout());
-        this.setSize(300, 300);
+        this.setSize(300, 380);
+        this.setMinimumSize(new Dimension(300, 360));
+        this.setMaximumSize(new Dimension(300, 360));
         Toolkit computer1 = Toolkit.getDefaultToolkit();
         Dimension dim = computer1.getScreenSize();
         int x = (dim.width / 2) - (this.getWidth() / 2);
@@ -95,7 +97,6 @@ public class Customer extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocation(x, y);
         this.setLocationRelativeTo(null);
-        this.setMinimumSize(new Dimension(300, 300));
 
         JPanel parent = new JPanel(new GridLayout(0, 1));
 
@@ -114,7 +115,7 @@ public class Customer extends JFrame {
         lastname.add(lastnameTextField);
 
         JPanel add = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        addButton = new JButton("Add Customer");
+        addButton = new ButtonColor("Add Customer", new Dimension(180, 50));
         addButton.addActionListener(actionListener);
         add.add(addButton);
 
@@ -125,7 +126,7 @@ public class Customer extends JFrame {
         id.add(idTextField);
 
         JPanel delete = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        deleteButton = new JButton("Delete Customer");
+        deleteButton = new ButtonColor("Delete Customer", new Dimension(180, 50));
         deleteButton.addActionListener(actionListener);
         delete.add(deleteButton);
 

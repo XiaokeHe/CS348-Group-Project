@@ -117,7 +117,9 @@ class Manage extends JFrame {
         super("Manage Book");
         this.statement = statement;
         setLayout(new BorderLayout());
-        this.setSize(350, 500);
+        this.setSize(350, 450);
+        this.setMinimumSize(new Dimension(350, 480));
+        this.setMaximumSize(new Dimension(350, 480));
         Toolkit computer1 = Toolkit.getDefaultToolkit();
         Dimension dim = computer1.getScreenSize();
         int x = (dim.width / 2) - (this.getWidth() / 2);
@@ -125,7 +127,6 @@ class Manage extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocation(x, y);
         this.setLocationRelativeTo(null);
-        this.setMinimumSize(new Dimension(350, 500));
         addButton = new ButtonColor("Add Book", new Dimension(180, 40));
         addButton.addActionListener(actionListener);
         deleteButton = new ButtonColor("Delete Book", new Dimension(180, 40));
@@ -137,9 +138,6 @@ class Manage extends JFrame {
         JPanel file = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel Genre = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel Status = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JPanel Price = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JPanel Location = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
 
         JPanel receive = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel deletePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));

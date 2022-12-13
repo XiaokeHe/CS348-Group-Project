@@ -11,7 +11,9 @@ public class Frame extends JFrame {
     public Frame(String title, Statement statement) throws Exception {
         super(title);
         setLayout(new BorderLayout());
-        this.setSize(500, 500);
+        this.setSize(400, 450);
+        this.setMinimumSize(new Dimension(400, 450));
+        this.setMaximumSize(new Dimension(400, 450));
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension dim = tk.getScreenSize();
         int x = (dim.width / 2) - (this.getWidth() / 2);
