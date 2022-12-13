@@ -28,6 +28,8 @@ public class Frame extends JFrame {
         child0.setSize(200, 100);
         JLabel addDelete = new JLabel("Add/Delete information");
         addDelete.setSize(new Dimension(200, 100));
+        Font f = new Font("TimesRoman", Font.PLAIN, 20);
+        addDelete.setFont(f);
         addDelete.setBounds(80, 20, 250, 80);
         child0.add(addDelete);
 
@@ -41,6 +43,8 @@ public class Frame extends JFrame {
         child1.setSize(200, 100);
         JLabel borrowReturn = new JLabel("Book Transactions");
         borrowReturn.setSize(new Dimension(200, 100));
+        Font f1 = new Font("TimesRoman", Font.PLAIN, 20);
+        borrowReturn.setFont(f1);
         borrowReturn.setBounds(80, 20, 250, 80);
         child1.add(borrowReturn);
 
